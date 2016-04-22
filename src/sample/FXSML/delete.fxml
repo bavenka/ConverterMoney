@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DeleteDialogController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ComboBox fx:id="selectDeposit" layoutX="186.0" layoutY="66.0" onAction="#showInfo" prefHeight="25.0" prefWidth="227.0" promptText="Выберите вклад" />
+         </children>
+      </Pane>
+      <TextArea fx:id="areaInfo" editable="false" prefHeight="226.0" prefWidth="515.0" />
+      <Pane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="buttonDelete" layoutX="127.0" layoutY="71.0" mnemonicParsing="false" onAction="#deleteDeposit" prefHeight="39.0" prefWidth="123.0" text="Удалить" />
+            <Button fx:id="buttonClose" layoutX="355.0" layoutY="71.0" mnemonicParsing="false" onAction="#closeDialog" prefHeight="39.0" prefWidth="123.0" text="Отмена" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

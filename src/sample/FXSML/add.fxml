@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AddDialogController">
+   <children>
+      <HBox prefHeight="88.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="40.0" prefWidth="226.0" text="Название вклада:">
+               <HBox.margin>
+                  <Insets left="25.0" top="25.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="fieldCreateName" prefHeight="42.0" prefWidth="292.0">
+               <HBox.margin>
+                  <Insets left="25.0" top="25.0" />
+               </HBox.margin></TextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="0.0" prefWidth="600.0" />
+      <HBox prefHeight="61.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="42.0" prefWidth="226.0" text="Срок вклада:">
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="fieldCreateTime" prefHeight="41.0" prefWidth="292.0">
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="66.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="42.0" prefWidth="226.0" text="Процентная ставка:">
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="fieldCreatePercent" prefHeight="41.0" prefWidth="292.0">
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="103.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="42.0" prefWidth="226.0" text="Информация о вкладе:">
+               <HBox.margin>
+                  <Insets left="25.0" top="25.0" />
+               </HBox.margin>
+            </Label>
+            <TextArea fx:id="areaCreateInfo" prefHeight="103.0" prefWidth="292.0">
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </TextArea>
+         </children>
+      </HBox>
+      <HBox prefHeight="103.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="42.0" prefWidth="226.0" text="Минимальная сумма вклада:">
+               <HBox.margin>
+                  <Insets left="25.0" top="25.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="fieldCreateMinSum" prefHeight="41.0" prefWidth="292.0">
+               <HBox.margin>
+                  <Insets left="25.0" top="25.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <Pane prefHeight="148.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="buttonClose" cancelButton="true" layoutX="484.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeDialog" prefHeight="32.0" prefWidth="102.0" text="Отмена" />
+            <Button fx:id="buttonAdd" layoutX="355.0" layoutY="14.0" mnemonicParsing="false" onAction="#actionAdd" prefHeight="32.0" prefWidth="102.0" text="Добавить" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="1196.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.MainController">
+  <children>
+    <MenuBar prefHeight="25.0" prefWidth="689.0" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem fx:id="buttonAdd" mnemonicParsing="false" onAction="#actionMenuItemPressed" text="Add" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem fx:id="buttonDelete" mnemonicParsing="false" onAction="#actionMenuItemPressed" text="Delete" />
+            <MenuItem fx:id="buttonEdit" mnemonicParsing="false" onAction="#actionMenuItemPressed" text="Edit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About Program" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="411.0" prefWidth="669.0" VBox.vgrow="ALWAYS" />
+      <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="879.0" prefWidth="669.0" vgap="5.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="239.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="425.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="50.0" minHeight="0.0" percentHeight="5.0" prefHeight="35.2" valignment="CENTER" />
+            <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="36.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="154.00000000000006" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" maxHeight="50.0" minHeight="40.0" prefHeight="363.0" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" maxHeight="50.0" minHeight="40.0" prefHeight="363.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="labelDate" alignment="CENTER" prefHeight="53.0" prefWidth="332.0" text="Дата вклада:" />
+            <Label fx:id="labelSum" alignment="CENTER" prefHeight="53.0" prefWidth="332.0" text="Сумма вклада:" GridPane.rowIndex="1" />
+            <Label fx:id="labelName" alignment="CENTER" prefHeight="53.0" prefWidth="332.0" text="Название вклада:" GridPane.rowIndex="2" />
+            <Label fx:id="labelTime" alignment="CENTER" prefHeight="53.0" prefWidth="332.0" text="Срок вклада:" GridPane.rowIndex="3" />
+            <Label fx:id="labelPercent" alignment="CENTER" prefHeight="53.0" prefWidth="332.0" text="Процентная ставка:" GridPane.rowIndex="4" />
+            <Label fx:id="labelInfo" alignment="CENTER" prefHeight="53.0" prefWidth="332.0" text="Информация о вкладе:" GridPane.rowIndex="5" />
+            <Label fx:id="labelMinSum" alignment="CENTER" prefHeight="53.0" prefWidth="332.0" text="Минимальная сумма вклада:" GridPane.rowIndex="6" />
+            <TextField fx:id="fieldDate" editable="false" prefHeight="60.0" prefWidth="290.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="fieldSum" prefHeight="62.0" prefWidth="332.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="fieldTime" editable="false" prefHeight="62.0" prefWidth="332.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="fieldPercent" editable="false" prefHeight="62.0" prefWidth="332.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextArea fx:id="areaInfo" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextField fx:id="fieldMinSum" editable="false" prefHeight="64.0" prefWidth="332.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <ComboBox fx:id="selectDeposit" onAction="#showElements" prefHeight="25.0" prefWidth="321.0" promptText="Выберите вклад" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="rezult" mnemonicParsing="false" prefHeight="34.0" prefWidth="105.0" text="Рассчитать" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="400.0" />
+         </VBox.margin>
+      </GridPane>
+  </children>
+</VBox>
