@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainController {
-    private CollectionDeposits collectionDepositsImpl = new CollectionDeposits();
+    public static CollectionDeposits collectionDepositsImpl;
     @FXML
     private ComboBox selectDeposit;
     @FXML
@@ -46,22 +46,26 @@ public class MainController {
     private TextField fieldMinSum;
     @FXML
     private Button rezult;
+    @FXML
+    private MenuItem buttonDelete;
 
-    private Parent fxmlAdd;
-    private Parent fxmlDelete;
-    private FXMLLoader fxmlLoader = new FXMLLoader();
+    private Parent root;
+   // private Parent fxmlDelete;
+   ///// private FXMLLoader fxmlLoader = new FXMLLoader();
     private AddDialogController addDialogController;
-    private DeleteDialogController deleteDialogController;
+    private  DeleteDialogController deleteDialogController;
     private Stage addDialogStage;
     private Stage deleteDialogStage;
     private Stage mainStage;
-public void setMainStage(Stage mainStage){
-    this.mainStage=mainStage;
-}
+
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
+    }
 
     @FXML
     private void initialize() {
-        collectionDepositsImpl.fillTestData();
+        collectionDepositsImpl=new CollectionDeposits();
+        collectionDepositsImpl.setListDeposits(collectionDepositsImpl.fillTestData());
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         fieldDate.setText(df.format(new Date()));
         fillComboBox(collectionDepositsImpl.getListDeposits());
@@ -82,27 +86,28 @@ public void setMainStage(Stage mainStage){
                 }
             }
         });
-       // initLoaderAdd();
-        initLoaderDelete();
+        // initLoaderAdd();
+
     }
-private void initLoaderAdd(){
-    try {
-        fxmlLoader.setLocation(getClass().getResource("../FXSML/add.fxml"));
-        fxmlAdd = fxmlLoader.load();
-        addDialogController = fxmlLoader.getController();
-    } catch (IOException e) {
-        System.out.println("Файл не найден!");
-    }
-}
-    private void initLoaderDelete(){
-        try {
-            fxmlLoader.setLocation(getClass().getResource("../FXSML/delete.fxml"));
-            fxmlDelete = fxmlLoader.load();
-            deleteDialogController = fxmlLoader.getController();
-        } catch (IOException e) {
-            System.out.println("Файл не найден!");
-        }
-    }
+
+    //private void initLoaderAdd(){
+//    try {
+//        fxmlLoader.setLocation(getClass().getResource("../FXSML/add.fxml"));
+//        fxmlAdd = fxmlLoader.load();
+//        addDialogController = fxmlLoader.getController();
+//    } catch (IOException e) {
+//        System.out.println("Файл не найден!");
+//    }
+//}
+//    private void initLoaderDelete() {
+//        try {
+//            fxmlLoader.setLocation(getClass().getResource("../FXSML/delete.fxml"));
+//            fxmlDelete = fxmlLoader.load();
+//            deleteDialogController = fxmlLoader.getController();
+//        } catch (IOException e) {
+//            System.out.println("Файл не найден!");
+//        }
+//    }
 
     private void privateControls() {
         labelTime.setVisible(false);
@@ -169,45 +174,72 @@ private void initLoaderAdd(){
         MenuItem clickedItem = (MenuItem) source;
         switch (clickedItem.getId()) {
             case "buttonAdd":
+                addDialogController=new AddDialogController();
                 addDialogController.setDeposit(new Deposit());
                 showDialogAdd();
-                collectionDepositsImpl.add(addDialogController.getDeposit());
+               collectionDepositsImpl.add(addDialogController.getDeposit());
                 break;
             case "buttonEdit":
                 System.out.println("edit");
                 break;
             case "buttonDelete":
-               // deleteDialogController.setDeposit(new Deposit());
-                showDialogDelete();
-                collectionDepositsImpl.delete(deleteDialogController.getDeposit());
+                deleteDialogController=new DeleteDialogController();
                 System.out.println(deleteDialogController.getDeposit());
-               privateControls();
+                 showDialogDelete();
+                collectionDepositsImpl.delete(deleteDialogController.getDeposit());
+                privateControls();
                 break;
         }
     }
-
-    private void showDialogAdd() {
-        if (addDialogStage == null) {
-            addDialogStage = new Stage();
-            addDialogStage.setTitle("Добавление вклада");
-            addDialogStage.setScene(new Scene(fxmlAdd));
-            addDialogStage.initModality(Modality.WINDOW_MODAL);
-            addDialogStage.initOwner(mainStage);
-        }
-            addDialogStage.showAndWait();
-
-    }
-    private void showDialogDelete(){
-        if(deleteDialogStage==null){
+//
+    //    private void showDialogAdd() {
+//        if (addDialogStage == null) {
+//            addDialogStage = new Stage();
+//            addDialogStage.setTitle("Добавление вклада");
+//            addDialogStage.setScene(new Scene(fxmlAdd));
+//            addDialogStage.initModality(Modality.WINDOW_MODAL);
+//            addDialogStage.initOwner(mainStage);
+//        }
+//            addDialogStage.showAndWait();
+//
+//    }
+//    private void showDialogDelete(){
+//    if(deleteDialogStage==null){
+//        deleteDialogStage = new Stage();
+//        deleteDialogStage.setTitle("Удаление вклада");
+//        deleteDialogStage.setScene(new Scene(fxmlDelete));
+//        deleteDialogStage.initModality(Modality.WINDOW_MODAL);
+//        deleteDialogStage.initOwner(mainStage);
+//    }
+//    deleteDialogStage.showAndWait();
+//}
+    private void showDialogDelete() {
+        try {
             deleteDialogStage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("../FXSML/delete.fxml"));
+            deleteDialogStage.setScene(new Scene(root));
             deleteDialogStage.setTitle("Удаление вклада");
-            deleteDialogStage.setScene(new Scene(fxmlDelete));
-            deleteDialogStage.initModality(Modality.WINDOW_MODAL);
+            deleteDialogStage.initModality(Modality.APPLICATION_MODAL);
             deleteDialogStage.initOwner(mainStage);
-        }
-        deleteDialogStage.showAndWait();
+            deleteDialogStage.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Файл не наден!");
         }
     }
+    private void showDialogAdd() {
+        try {
+            addDialogStage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("../FXSML/add.fxml"));
+            addDialogStage.setScene(new Scene(root));
+            addDialogStage.setTitle("Добавление вклада");
+            addDialogStage.initModality(Modality.APPLICATION_MODAL);
+            addDialogStage.initOwner(mainStage);
+            addDialogStage.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Файл не наден!");
+        }
+    }
+}
 
 
 

@@ -16,7 +16,6 @@ import sample.Objects.Deposit;
  * Created by Павел on 21.04.2016.
  */
 public class DeleteDialogController {
-    private CollectionDeposits collectionDepositsImpl = new CollectionDeposits();
     @FXML
     private TextArea areaInfo;
     @FXML
@@ -26,7 +25,7 @@ public class DeleteDialogController {
     @FXML
     private Button buttonClose;
 
-    private Deposit deposit;
+    private static Deposit deposit;
 
     public void setDeposit(Deposit deposit){
         this.deposit=deposit;
@@ -34,23 +33,14 @@ public class DeleteDialogController {
     public Deposit getDeposit(){
         return  deposit;
     }
+    private MainController mainController;
     @FXML
     private void initialize(){
-        collectionDepositsImpl.fillTestData();
-        fillComboBoxDelete(collectionDepositsImpl.getListDeposits());
+        fillComboBoxDelete(MainController.collectionDepositsImpl.getListDeposits());
         areaInfo.setVisible(false);
         buttonClose.setVisible(false);
         buttonDelete.setVisible(false);
-        collectionDepositsImpl.getListDeposits().addListener(new ListChangeListener<Deposit>() {
-            @Override
-            public void onChanged(Change<? extends Deposit> c) {
-                selectDeposit.getItems().clear();
-                areaInfo.setText("");
-                fillComboBoxDelete(collectionDepositsImpl.getListDeposits());
-            }
-        });
-
-    }
+   }
     private void fillComboBoxDelete(ObservableList<Deposit> listDeposits){
         selectDeposit.getItems().add(0, "Выберите вклад");
         int i = 1;
@@ -74,20 +64,18 @@ public class DeleteDialogController {
     }
 
     public void showInfo(ActionEvent actionEvent) {
-        if(selectDeposit.getValue()=="Выберите вклад"){
+        if (selectDeposit.getValue() == "Выберите вклад") {
             areaInfo.setVisible(false);
             buttonDelete.setVisible(false);
             buttonClose.setVisible(false);
 
 
-        }
-        else{
-            fillAreaInfo(collectionDepositsImpl.getListDeposits());
+        } else {
+            fillAreaInfo(MainController.collectionDepositsImpl.getListDeposits());
             areaInfo.setVisible(true);
             buttonDelete.setVisible(true);
             buttonClose.setVisible(true);
         }
-
     }
     public void actionDelete(ObservableList<Deposit>allDeposits){
         for(Deposit dep:allDeposits){
@@ -100,7 +88,7 @@ public class DeleteDialogController {
     }
 
     public void deleteDeposit(ActionEvent actionEvent) {
-       actionDelete(collectionDepositsImpl.getListDeposits());
+       actionDelete(MainController.collectionDepositsImpl.getListDeposits());
         closeDialog(actionEvent);
     }
 

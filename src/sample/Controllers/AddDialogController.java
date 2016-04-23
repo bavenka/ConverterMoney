@@ -28,22 +28,25 @@ public class AddDialogController {
     @FXML
     private TextField fieldCreateMinSum;
 //private CollectionDeposits collectionDeposits=new CollectionDeposits();
-    private Deposit deposit;
+    private static Deposit deposit;
 
     public Deposit getDeposit(){
         return deposit;
     }
-    public void setDeposit(Deposit deposit){
-        if(deposit==null){
-            return;
-        }
+    public void setDeposit(Deposit deposit) {
         this.deposit=deposit;
-        fieldCreateName.setText(deposit.getName());
-        fieldCreateTime.setText(String.valueOf(deposit.getTime()));
-        fieldCreatePercent.setText(String.valueOf(deposit.getInsertRate()));
-        areaCreateInfo.setText(deposit.getInfo());
-        fieldCreateMinSum.setText(String.valueOf(deposit.getMinSum()));
     }
+
+//        if(deposit==null){
+//            return;
+//        }
+//        this.deposit=deposit;
+//        fieldCreateName.setText(deposit.getName());
+//        fieldCreateTime.setText(String.valueOf(deposit.getTime()));
+//        fieldCreatePercent.setText(String.valueOf(deposit.getInsertRate()));
+//        areaCreateInfo.setText(deposit.getInfo());
+//        fieldCreateMinSum.setText(String.valueOf(deposit.getMinSum()));
+//    }
 
 
 
