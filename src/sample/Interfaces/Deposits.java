@@ -7,6 +7,6 @@ import sample.Objects.Deposit;
  */
 public interface Deposits {
     void add(Deposit deposit);
-    void edit(Deposit deposit);
+    void edit(int index,Deposit deposit);
     void delete(Deposit deposit);
 }

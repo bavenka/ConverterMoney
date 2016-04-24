@@ -54,8 +54,10 @@ public class MainController {
    ///// private FXMLLoader fxmlLoader = new FXMLLoader();
     private AddDialogController addDialogController;
     private  DeleteDialogController deleteDialogController;
+    private EditDialogController editDialogController;
     private Stage addDialogStage;
     private Stage deleteDialogStage;
+    private Stage editDialogStage;
     private Stage mainStage;
 
     public void setMainStage(Stage mainStage) {
@@ -180,10 +182,14 @@ public class MainController {
                collectionDepositsImpl.add(addDialogController.getDeposit());
                 break;
             case "buttonEdit":
-                System.out.println("edit");
+                editDialogController=new EditDialogController();
+                editDialogController.setDeposit(new Deposit());
+                showDialogEdit();
+                collectionDepositsImpl.edit(editDialogController.getIndexDeposit(), editDialogController.getDeposit());
                 break;
             case "buttonDelete":
                 deleteDialogController=new DeleteDialogController();
+
                 System.out.println(deleteDialogController.getDeposit());
                  showDialogDelete();
                 collectionDepositsImpl.delete(deleteDialogController.getDeposit());
@@ -239,9 +245,17 @@ public class MainController {
             System.out.println("Файл не наден!");
         }
     }
+    private void showDialogEdit() {
+        try {
+            editDialogStage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("../FXSML/edit.fxml"));
+            editDialogStage.setScene(new Scene(root));
+            editDialogStage.setTitle("Редактирование вклада");
+            editDialogStage.initModality(Modality.APPLICATION_MODAL);
+            editDialogStage.initOwner(mainStage);
+            editDialogStage.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Файл не наден!");
+        }
+    }
 }
-
-
-
-
-

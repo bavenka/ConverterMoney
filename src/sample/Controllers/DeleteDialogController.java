@@ -29,6 +29,7 @@ public class DeleteDialogController {
 
     public void setDeposit(Deposit deposit){
         this.deposit=deposit;
+
     }
     public Deposit getDeposit(){
         return  deposit;
