@@ -16,7 +16,6 @@ public class Main extends Application {
         Parent fxmlMain=fxmlLoader.load();
         MainController mainController=fxmlLoader.getController();
         mainController.setMainStage(primaryStage);
-       // Parent root = FXMLLoader.load(getClass().getResource("FXSML/main.fxml"));
         primaryStage.setTitle("Калькулятор вкладов");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(fxmlMain, 700, 800));

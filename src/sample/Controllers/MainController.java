@@ -12,8 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Calculations.ClcDeposit;
+import sample.Database.Deserialization;
+import sample.Database.Serialisation;
 import sample.Interfaces.Impl.CollectionDeposits;
 import sample.Objects.Deposit;
+import sample.Objects.Payroll;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -45,13 +49,13 @@ public class MainController {
     @FXML
     private TextField fieldMinSum;
     @FXML
-    private Button rezult;
+    private Button buttonRezult;
     @FXML
     private MenuItem buttonDelete;
+    @FXML
+    private TextArea areaRezult;
 
     private Parent root;
-   // private Parent fxmlDelete;
-   ///// private FXMLLoader fxmlLoader = new FXMLLoader();
     private AddDialogController addDialogController;
     private  DeleteDialogController deleteDialogController;
     private EditDialogController editDialogController;
@@ -67,7 +71,7 @@ public class MainController {
     @FXML
     private void initialize() {
         collectionDepositsImpl=new CollectionDeposits();
-        collectionDepositsImpl.setListDeposits(collectionDepositsImpl.fillTestData());
+        collectionDepositsImpl.setListDeposits(Deserialization.readBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml"));
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         fieldDate.setText(df.format(new Date()));
         fillComboBox(collectionDepositsImpl.getListDeposits());
@@ -88,28 +92,8 @@ public class MainController {
                 }
             }
         });
-        // initLoaderAdd();
 
     }
-
-    //private void initLoaderAdd(){
-//    try {
-//        fxmlLoader.setLocation(getClass().getResource("../FXSML/add.fxml"));
-//        fxmlAdd = fxmlLoader.load();
-//        addDialogController = fxmlLoader.getController();
-//    } catch (IOException e) {
-//        System.out.println("Файл не найден!");
-//    }
-//}
-//    private void initLoaderDelete() {
-//        try {
-//            fxmlLoader.setLocation(getClass().getResource("../FXSML/delete.fxml"));
-//            fxmlDelete = fxmlLoader.load();
-//            deleteDialogController = fxmlLoader.getController();
-//        } catch (IOException e) {
-//            System.out.println("Файл не найден!");
-//        }
-//    }
 
     private void privateControls() {
         labelTime.setVisible(false);
@@ -121,7 +105,7 @@ public class MainController {
         fieldPercent.setVisible(false);
         fieldTime.setVisible(false);
         fieldMinSum.setVisible(false);
-        rezult.setVisible(false);
+        buttonRezult.setVisible(false);
 
     }
 
@@ -134,7 +118,7 @@ public class MainController {
         fieldPercent.setVisible(true);
         fieldTime.setVisible(true);
         fieldMinSum.setVisible(true);
-        rezult.setVisible(true);
+        buttonRezult.setVisible(true);
 
     }
 
@@ -151,8 +135,8 @@ public class MainController {
     public void fillControls(ObservableList<Deposit> allDeposits) {
         for (Deposit deposit : allDeposits) {
             if (selectDeposit.getValue() == deposit.getName()) {
-                fieldTime.setText(String.valueOf(deposit.getTime()) + " месяц(а/ев)");
-                fieldPercent.setText(String.valueOf(deposit.getInsertRate()) + " %");
+                fieldTime.setText(String.valueOf(deposit.getTime()));
+                fieldPercent.setText(String.valueOf(deposit.getInsertRate()));
                 areaInfo.setText(deposit.getInfo());
                 fieldMinSum.setText(String.valueOf(deposit.getMinSum()));
             }
@@ -179,46 +163,31 @@ public class MainController {
                 addDialogController=new AddDialogController();
                 addDialogController.setDeposit(new Deposit());
                 showDialogAdd();
-               collectionDepositsImpl.add(addDialogController.getDeposit());
+                collectionDepositsImpl.add(addDialogController.getDeposit());
+                Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
+                for(Deposit dep:collectionDepositsImpl.getListDeposits()){
+                    System.out.println(dep);
+                }
+               privateControls();
                 break;
             case "buttonEdit":
                 editDialogController=new EditDialogController();
                 editDialogController.setDeposit(new Deposit());
                 showDialogEdit();
                 collectionDepositsImpl.edit(editDialogController.getIndexDeposit(), editDialogController.getDeposit());
+                Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
+               privateControls();
                 break;
             case "buttonDelete":
                 deleteDialogController=new DeleteDialogController();
-
-                System.out.println(deleteDialogController.getDeposit());
                  showDialogDelete();
                 collectionDepositsImpl.delete(deleteDialogController.getDeposit());
+                Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
                 privateControls();
                 break;
         }
     }
-//
-    //    private void showDialogAdd() {
-//        if (addDialogStage == null) {
-//            addDialogStage = new Stage();
-//            addDialogStage.setTitle("Добавление вклада");
-//            addDialogStage.setScene(new Scene(fxmlAdd));
-//            addDialogStage.initModality(Modality.WINDOW_MODAL);
-//            addDialogStage.initOwner(mainStage);
-//        }
-//            addDialogStage.showAndWait();
-//
-//    }
-//    private void showDialogDelete(){
-//    if(deleteDialogStage==null){
-//        deleteDialogStage = new Stage();
-//        deleteDialogStage.setTitle("Удаление вклада");
-//        deleteDialogStage.setScene(new Scene(fxmlDelete));
-//        deleteDialogStage.initModality(Modality.WINDOW_MODAL);
-//        deleteDialogStage.initOwner(mainStage);
-//    }
-//    deleteDialogStage.showAndWait();
-//}
+
     private void showDialogDelete() {
         try {
             deleteDialogStage = new Stage();
@@ -245,6 +214,7 @@ public class MainController {
             System.out.println("Файл не наден!");
         }
     }
+
     private void showDialogEdit() {
         try {
             editDialogStage = new Stage();
@@ -257,5 +227,17 @@ public class MainController {
         } catch (IOException e) {
             System.out.println("Файл не наден!");
         }
+    }
+
+    public void actionCalculate(ActionEvent actionEvent) {
+        Payroll payroll=ClcDeposit.calculateDeposit(Double.parseDouble(fieldSum.getText()),Integer.parseInt(fieldTime.getText()),Double.parseDouble(fieldPercent.getText()));
+        String s=" ";
+        s="Сумма вклада: "+fieldSum.getText()+"\r\n"+
+                "Сумма процентов на день наступления срока возврата вклада: "+payroll.getSumPercent().intValue()+"\r\n"+
+                "Общая сумма на день возврата вклада: "+payroll.getSumTotal().intValue();
+        areaRezult.setText(s);
+    }
+
+    public void startServer(ActionEvent actionEvent) {
     }
 }

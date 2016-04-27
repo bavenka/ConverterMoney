@@ -15,9 +15,10 @@ import java.util.Observable;
  */
 public class Serialisation {
     public static void writeBD(String fileName, ObservableList<Deposit> allObjects){
+        ArrayList<Deposit> deposits=new ArrayList(allObjects);
         try{
             XMLEncoder writer=new XMLEncoder(new BufferedOutputStream(new FileOutputStream(fileName)));
-            writer.writeObject(allObjects);
+            writer.writeObject(deposits);
             writer.close();
         }catch (FileNotFoundException e){
             System.out.println("Файл не найден!");
