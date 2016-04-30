@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import sample.Database.Deserialization;
 import sample.Interfaces.Impl.CollectionDeposits;
 import sample.Objects.Deposit;
 
@@ -60,7 +61,7 @@ public class DeleteDialogController {
                       "Минимальная сумма вкладов: "+deposit.getMinSum();
                 areaInfo.setText(s);
             }
-            s=" ";
+            //s=" ";
         }
     }
 

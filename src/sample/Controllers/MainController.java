@@ -72,8 +72,10 @@ public class MainController {
     private void initialize() {
         collectionDepositsImpl=new CollectionDeposits();
         collectionDepositsImpl.setListDeposits(Deserialization.readBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml"));
+
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         fieldDate.setText(df.format(new Date()));
+        areaInfo.setWrapText(true);
         fillComboBox(collectionDepositsImpl.getListDeposits());
         collectionDepositsImpl.getListDeposits().addListener(new ListChangeListener<Deposit>() {
             @Override
@@ -92,7 +94,6 @@ public class MainController {
                 }
             }
         });
-
     }
 
     private void privateControls() {
@@ -101,12 +102,11 @@ public class MainController {
         labelInfo.setVisible(false);
         labelMinSum.setVisible(false);
         areaInfo.setVisible(false);
-
+        areaRezult.setVisible(false);
         fieldPercent.setVisible(false);
         fieldTime.setVisible(false);
         fieldMinSum.setVisible(false);
         buttonRezult.setVisible(false);
-
     }
 
     private void publicControls() {
@@ -163,20 +163,20 @@ public class MainController {
                 addDialogController=new AddDialogController();
                 addDialogController.setDeposit(new Deposit());
                 showDialogAdd();
-                collectionDepositsImpl.add(addDialogController.getDeposit());
-                Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
-                for(Deposit dep:collectionDepositsImpl.getListDeposits()){
-                    System.out.println(dep);
+                if(addDialogController.getDeposit()!=null) {
+                    collectionDepositsImpl.add(addDialogController.getDeposit());
+                    Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
+                    privateControls();
                 }
-               privateControls();
                 break;
             case "buttonEdit":
                 editDialogController=new EditDialogController();
-                editDialogController.setDeposit(new Deposit());
                 showDialogEdit();
-                collectionDepositsImpl.edit(editDialogController.getIndexDeposit(), editDialogController.getDeposit());
-                Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
-               privateControls();
+                if(editDialogController.getDeposit()!=null) {
+                    collectionDepositsImpl.edit(editDialogController.getIndexDeposit(), editDialogController.getDeposit());
+                    Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
+                    privateControls();
+                }
                 break;
             case "buttonDelete":
                 deleteDialogController=new DeleteDialogController();
@@ -232,10 +232,12 @@ public class MainController {
     public void actionCalculate(ActionEvent actionEvent) {
         Payroll payroll=ClcDeposit.calculateDeposit(Double.parseDouble(fieldSum.getText()),Integer.parseInt(fieldTime.getText()),Double.parseDouble(fieldPercent.getText()));
         String s=" ";
-        s="Сумма вклада: "+fieldSum.getText()+"\r\n"+
+        s="Вклад: "+selectDeposit.getValue()+"\r\n"+
+                "Сумма вклада: "+fieldSum.getText()+"\r\n"+
                 "Сумма процентов на день наступления срока возврата вклада: "+payroll.getSumPercent().intValue()+"\r\n"+
                 "Общая сумма на день возврата вклада: "+payroll.getSumTotal().intValue();
         areaRezult.setText(s);
+        areaRezult.setVisible(true);
     }
 
     public void startServer(ActionEvent actionEvent) {

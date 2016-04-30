@@ -41,7 +41,7 @@ public class EditDialogController {
     private Button buttonClose;
     @FXML
     private ComboBox selectDeposit;
-    private static Deposit deposit;
+    private static Deposit deposit=null;
     private static int indexDeposit;
 
     public  void setIndexDeposit(int indexDeposit) {
@@ -61,6 +61,7 @@ public class EditDialogController {
 
     @FXML
     private void initialize(){
+        areaInfo.setWrapText(true);
         fillComboBoxEdit(MainController.collectionDepositsImpl.getListDeposits());
         privateControls();
 
@@ -102,7 +103,7 @@ public class EditDialogController {
         }
     }
 
-    public void fillControls(ObservableList<Deposit> allDeposits) {
+    private void fillControls(ObservableList<Deposit> allDeposits) {
         for (Deposit deposit : allDeposits) {
             if (selectDeposit.getValue() == deposit.getName()) {
                 fieldName.setText(deposit.getName());
@@ -123,27 +124,44 @@ public class EditDialogController {
         }
     }
 
-    public void actionEdit(ObservableList<Deposit>allDeposits){
+    private void searchIndex(ObservableList<Deposit>allDeposits){
         for(Deposit deposit:allDeposits){
             if(selectDeposit.getValue().equals(deposit.getName())){
                 setIndexDeposit(allDeposits.indexOf(deposit));
             }
         }
     }
+    private boolean checkNameObject(ObservableList<Deposit>deposits){
+        for(int i=0;i<deposits.size();i++){
+            if(deposits.get(i).equals(indexDeposit)){
+                continue;
+            }
+            else if (deposits.get(i).getName().equals(deposit.getName()))
+                return false;
+        }
+        return true;
+    }
 
     public void editDeposit(ActionEvent actionEvent) {
-        actionEdit(MainController.collectionDepositsImpl.getListDeposits());
+        deposit=new Deposit();
+        searchIndex(MainController.collectionDepositsImpl.getListDeposits());
         deposit.setName(fieldName.getText());
         deposit.setTime(Integer.parseInt(fieldTime.getText()));
         deposit.setInsertRate(Double.parseDouble(fieldPercent.getText()));
         deposit.setInfo(areaInfo.getText());
         deposit.setMinSum(Integer.parseInt(fieldMinSum.getText()));
-        closeDialog(actionEvent);
+        if(checkNameObject(MainController.collectionDepositsImpl.getListDeposits())==true){
+            closeDialog(actionEvent);
+        }
+        else{
+            deposit=null;
+            closeDialog(actionEvent);
+        }
     }
 
     public void closeDialog(ActionEvent actionEvent) {
         Node source =(Node) actionEvent.getSource();
         Stage stage=(Stage) source.getScene().getWindow();
-        stage.hide();
+        stage.close();
     }
 }

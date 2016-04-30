@@ -1,6 +1,7 @@
 package sample.Controllers;
 
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -27,7 +28,10 @@ public class AddDialogController {
     private TextArea areaCreateInfo;
     @FXML
     private TextField fieldCreateMinSum;
-
+    @FXML
+    private void initialize(){
+        areaCreateInfo.setWrapText(true);
+    }
     private static Deposit deposit;
 
     public Deposit getDeposit(){
@@ -42,13 +46,26 @@ public class AddDialogController {
         Stage stage=(Stage) source.getScene().getWindow();
         stage.hide();
     }
-
+    private boolean checkEqualsNameObject(ObservableList<Deposit>deposits){
+        for(Deposit dep:deposits){
+            if(dep.getName().equals(deposit.getName())){
+                return false;
+            }
+        }
+        return true;
+    }
     public void actionAdd(ActionEvent actionEvent) {
         deposit.setName(fieldCreateName.getText());
         deposit.setTime(Integer.parseInt(fieldCreateTime.getText()));
         deposit.setInsertRate(Double.parseDouble(fieldCreatePercent.getText()));
         deposit.setInfo(areaCreateInfo.getText());
         deposit.setMinSum(Integer.parseInt(fieldCreateMinSum.getText()));
-        closeDialog(actionEvent);
+        if(checkEqualsNameObject(MainController.collectionDepositsImpl.getListDeposits())==true){
+            closeDialog(actionEvent);
+        }
+        else{
+            deposit=null;
+            closeDialog(actionEvent);
+        }
     }
 }

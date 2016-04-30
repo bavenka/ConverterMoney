@@ -4,20 +4,38 @@
   <void method="add">
    <object class="sample.Objects.Deposit">
     <void property="info">
-     <string>Возможность пополнения вклада 
-При условии неначисления по вкладу пониженной процентной ставки пополнение производится по день (включительно), предшествующий дню истечения 5-ти месяцев хранения вклада, считая со дня открытия вкладного счета</string>
+     <string>wqerdsaft</string>
     </void>
     <void property="insertRate">
-     <double>21.5</double>
+     <double>31.0</double>
     </void>
     <void property="minSum">
-     <int>500000</int>
+     <int>100</int>
     </void>
     <void property="name">
-     <string>Интернет-депозит-Тренд (6 месяцев)</string>
+     <string>qwert</string>
     </void>
     <void property="time">
-     <int>6</int>
+     <int>3</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="sample.Objects.Deposit">
+    <void property="info">
+     <string>asdfvcbert</string>
+    </void>
+    <void property="insertRate">
+     <double>23.0</double>
+    </void>
+    <void property="minSum">
+     <int>200</int>
+    </void>
+    <void property="name">
+     <string>qwe</string>
+    </void>
+    <void property="time">
+     <int>4</int>
     </void>
    </object>
   </void>

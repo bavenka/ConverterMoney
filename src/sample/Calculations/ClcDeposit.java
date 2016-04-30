@@ -16,10 +16,11 @@ public class ClcDeposit {
             capitalization[i]=value.intValue();
             firstSum =capitalization[i];
         }
+
         payroll.setSumDeposit(sum);
         payroll.setSumTotal(capitalization[capitalization.length-1]);
         payroll.setSumPercent(capitalization[capitalization.length-1]-sum);
-         System.out.println(payroll);
+        System.out.println(payroll);
         return payroll;
     }
 }

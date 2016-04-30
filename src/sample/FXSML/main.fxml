@@ -87,7 +87,7 @@
                   </TextField>
                   <ComboBox fx:id="selectDeposit" onAction="#showElements" prefHeight="25.0" prefWidth="321.0" promptText="Выберите вклад" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Button fx:id="buttonRezult" mnemonicParsing="false" onAction="#actionCalculate" prefHeight="34.0" prefWidth="105.0" text="Рассчитать" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Button fx:id="buttonServer" mnemonicParsing="false" onAction="#startServer" prefHeight="25.0" prefWidth="150.0" text="ВКЛ сервер" GridPane.rowIndex="7" />
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" />
                </children>
                <VBox.margin>
                   <Insets bottom="400.0" />
