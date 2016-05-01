@@ -35,14 +35,12 @@ public class DeleteDialogController {
     public Deposit getDeposit(){
         return  deposit;
     }
-    private MainController mainController;
     @FXML
     private void initialize(){
         fillComboBoxDelete(MainController.collectionDepositsImpl.getListDeposits());
         areaInfo.setVisible(false);
-        buttonClose.setVisible(false);
         buttonDelete.setVisible(false);
-   }
+    }
     private void fillComboBoxDelete(ObservableList<Deposit> listDeposits){
         selectDeposit.getItems().add(0, "Выберите вклад");
         int i = 1;
@@ -61,7 +59,6 @@ public class DeleteDialogController {
                       "Минимальная сумма вкладов: "+deposit.getMinSum();
                 areaInfo.setText(s);
             }
-            //s=" ";
         }
     }
 
@@ -69,14 +66,12 @@ public class DeleteDialogController {
         if (selectDeposit.getValue() == "Выберите вклад") {
             areaInfo.setVisible(false);
             buttonDelete.setVisible(false);
-            buttonClose.setVisible(false);
 
 
         } else {
             fillAreaInfo(MainController.collectionDepositsImpl.getListDeposits());
             areaInfo.setVisible(true);
             buttonDelete.setVisible(true);
-            buttonClose.setVisible(true);
         }
     }
     public void actionDelete(ObservableList<Deposit>allDeposits){

@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_74" class="java.beans.XMLDecoder">
+<java version="1.8.0_102-ea" class="java.beans.XMLDecoder">
  <object class="java.util.ArrayList">
   <void method="add">
    <object class="sample.Objects.Deposit">
     <void property="info">
-     <string>wqerdsaft</string>
+     <string>cvxert</string>
     </void>
     <void property="insertRate">
-     <double>31.0</double>
+     <double>24.0</double>
     </void>
     <void property="minSum">
-     <int>100</int>
+     <int>200</int>
     </void>
     <void property="name">
      <string>qwert</string>
     </void>
     <void property="time">
-     <int>3</int>
+     <int>45</int>
     </void>
    </object>
   </void>
   <void method="add">
    <object class="sample.Objects.Deposit">
     <void property="info">
-     <string>asdfvcbert</string>
+     <string>zxcvret</string>
     </void>
     <void property="insertRate">
-     <double>23.0</double>
+     <double>34.0</double>
     </void>
     <void property="minSum">
      <int>200</int>
@@ -35,7 +35,7 @@
      <string>qwe</string>
     </void>
     <void property="time">
-     <int>4</int>
+     <int>21</int>
     </void>
    </object>
   </void>

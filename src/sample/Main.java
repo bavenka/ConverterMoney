@@ -11,6 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        setUserAgentStylesheet(STYLESHEET_MODENA);
         FXMLLoader fxmlLoader=new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("FXSML/main.fxml"));
         Parent fxmlMain=fxmlLoader.load();
@@ -19,6 +20,7 @@ public class Main extends Application {
         primaryStage.setTitle("Калькулятор вкладов");
         primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(fxmlMain, 700, 800));
+
         primaryStage.show();
     }
 

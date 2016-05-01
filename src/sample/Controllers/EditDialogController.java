@@ -11,6 +11,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Objects.Deposit;
+import sample.Utils.DialogManager;
+import sample.Validation.ImplValidation;
+
 /**
  * Created by Павел on 23.04.2016.
  */
@@ -62,10 +65,15 @@ public class EditDialogController {
     @FXML
     private void initialize(){
         areaInfo.setWrapText(true);
+        ImplValidation.validName(fieldName);
+        ImplValidation.validTime(fieldTime);
+        ImplValidation.validPercent(fieldPercent);
+        ImplValidation.validMinSum(fieldMinSum);
         fillComboBoxEdit(MainController.collectionDepositsImpl.getListDeposits());
         privateControls();
 
     }
+
     private void privateControls(){
         labelName.setVisible(false);
         labelTime.setVisible(false);
@@ -77,7 +85,6 @@ public class EditDialogController {
         fieldTime.setVisible(false);
         fieldMinSum.setVisible(false);
         areaInfo.setVisible(false);
-        buttonClose.setVisible(false);
         buttonEdit.setVisible(false);
     }
     private void publicControls(){
@@ -91,7 +98,6 @@ public class EditDialogController {
         fieldTime.setVisible(true);
         fieldMinSum.setVisible(true);
         areaInfo.setVisible(true);
-        buttonClose.setVisible(true);
         buttonEdit.setVisible(true);
     }
     private void fillComboBoxEdit(ObservableList<Deposit> listDeposits){
@@ -143,19 +149,24 @@ public class EditDialogController {
     }
 
     public void editDeposit(ActionEvent actionEvent) {
-        deposit=new Deposit();
-        searchIndex(MainController.collectionDepositsImpl.getListDeposits());
-        deposit.setName(fieldName.getText());
-        deposit.setTime(Integer.parseInt(fieldTime.getText()));
-        deposit.setInsertRate(Double.parseDouble(fieldPercent.getText()));
-        deposit.setInfo(areaInfo.getText());
-        deposit.setMinSum(Integer.parseInt(fieldMinSum.getText()));
-        if(checkNameObject(MainController.collectionDepositsImpl.getListDeposits())==true){
-            closeDialog(actionEvent);
+        if (fieldMinSum.getText().length() == 0 || fieldName.getText().length() == 0 || fieldPercent.getText().length() == 0 || fieldTime.getText().length() == 0 || areaInfo.getText().length() == 0) {
+            DialogManager.showErrorDialog("Ошибка", "Поля не могут быть пустыми!");
         }
-        else{
-            deposit=null;
-            closeDialog(actionEvent);
+        else {
+            deposit = new Deposit();
+            searchIndex(MainController.collectionDepositsImpl.getListDeposits());
+            deposit.setName(fieldName.getText());
+            deposit.setTime(Integer.parseInt(fieldTime.getText()));
+            deposit.setInsertRate(Double.parseDouble(fieldPercent.getText()));
+            deposit.setInfo(areaInfo.getText());
+            deposit.setMinSum(Integer.parseInt(fieldMinSum.getText()));
+            if(checkNameObject(MainController.collectionDepositsImpl.getListDeposits()) == true){
+                closeDialog(actionEvent);
+            }
+            else{
+                DialogManager.showInfoDialog("Информация","Такой депозит уже присутствует!");
+                deposit=null;
+            }
         }
     }
 

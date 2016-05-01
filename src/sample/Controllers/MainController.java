@@ -18,6 +18,8 @@ import sample.Database.Serialisation;
 import sample.Interfaces.Impl.CollectionDeposits;
 import sample.Objects.Deposit;
 import sample.Objects.Payroll;
+import sample.Utils.DialogManager;
+import sample.Validation.ImplValidation;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -72,7 +74,6 @@ public class MainController {
     private void initialize() {
         collectionDepositsImpl=new CollectionDeposits();
         collectionDepositsImpl.setListDeposits(Deserialization.readBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml"));
-
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         fieldDate.setText(df.format(new Date()));
         areaInfo.setWrapText(true);
@@ -86,14 +87,8 @@ public class MainController {
         });
 
         privateControls();
-        fieldSum.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (!event.getCharacter().matches("\\d")) {
-                    event.consume();
-                }
-            }
-        });
+        ImplValidation.validSum(fieldSum);
+
     }
 
     private void privateControls() {
@@ -161,8 +156,8 @@ public class MainController {
         switch (clickedItem.getId()) {
             case "buttonAdd":
                 addDialogController=new AddDialogController();
-                addDialogController.setDeposit(new Deposit());
                 showDialogAdd();
+
                 if(addDialogController.getDeposit()!=null) {
                     collectionDepositsImpl.add(addDialogController.getDeposit());
                     Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
@@ -180,7 +175,7 @@ public class MainController {
                 break;
             case "buttonDelete":
                 deleteDialogController=new DeleteDialogController();
-                 showDialogDelete();
+                showDialogDelete();
                 collectionDepositsImpl.delete(deleteDialogController.getDeposit());
                 Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
                 privateControls();
@@ -229,17 +224,37 @@ public class MainController {
         }
     }
 
+    private Deposit choiceDeposit(ObservableList<Deposit>deposits){
+        Deposit deposit=new Deposit();
+        for(Deposit dep:deposits){
+            if(dep.getName().equals(selectDeposit.getValue())){
+                deposit=dep;
+            }
+        }
+        return deposit;
+    }
+
     public void actionCalculate(ActionEvent actionEvent) {
-        Payroll payroll=ClcDeposit.calculateDeposit(Double.parseDouble(fieldSum.getText()),Integer.parseInt(fieldTime.getText()),Double.parseDouble(fieldPercent.getText()));
-        String s=" ";
-        s="Вклад: "+selectDeposit.getValue()+"\r\n"+
-                "Сумма вклада: "+fieldSum.getText()+"\r\n"+
-                "Сумма процентов на день наступления срока возврата вклада: "+payroll.getSumPercent().intValue()+"\r\n"+
-                "Общая сумма на день возврата вклада: "+payroll.getSumTotal().intValue();
-        areaRezult.setText(s);
-        areaRezult.setVisible(true);
+        Deposit deposit=choiceDeposit(collectionDepositsImpl.getListDeposits());
+        if(fieldSum.getText().trim().length()==0){
+            DialogManager.showErrorDialog("Ошибка","Сумма вклада должна быть числом!");
+        }
+        else if(Integer.parseInt(fieldSum.getText())<deposit.getMinSum()){
+            System.out.println(deposit.getMinSum());
+        }
+        else {
+            Payroll payroll = ClcDeposit.calculateDeposit(Double.parseDouble(fieldSum.getText()), Integer.parseInt(fieldTime.getText()), Double.parseDouble(fieldPercent.getText()));
+            String s = " ";
+            s = "Вклад: " + selectDeposit.getValue() + "\r\n" +
+                    "Сумма вклада: " + fieldSum.getText() + "\r\n" +
+                    "Сумма процентов на день наступления срока возврата вклада: " + payroll.getSumPercent().intValue() + "\r\n" +
+                    "Общая сумма на день возврата вклада: " + payroll.getSumTotal().intValue();
+            areaRezult.setText(s);
+            areaRezult.setVisible(true);
+        }
     }
 
     public void startServer(ActionEvent actionEvent) {
+
     }
 }
