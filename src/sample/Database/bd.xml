@@ -4,38 +4,76 @@
   <void method="add">
    <object class="sample.Objects.Deposit">
     <void property="info">
-     <string>cvxert</string>
+     <string>xvcbtry</string>
     </void>
     <void property="insertRate">
-     <double>24.0</double>
+     <double>45.0</double>
     </void>
     <void property="minSum">
      <int>200</int>
     </void>
     <void property="name">
-     <string>qwert</string>
+     <string>etryu</string>
     </void>
     <void property="time">
-     <int>45</int>
+     <int>5</int>
     </void>
    </object>
   </void>
   <void method="add">
    <object class="sample.Objects.Deposit">
     <void property="info">
-     <string>zxcvret</string>
+     <string>zxcvwer</string>
     </void>
     <void property="insertRate">
      <double>34.0</double>
     </void>
     <void property="minSum">
-     <int>200</int>
+     <int>300</int>
     </void>
     <void property="name">
-     <string>qwe</string>
+     <string>xzcvbfdret</string>
     </void>
     <void property="time">
-     <int>21</int>
+     <int>3</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="sample.Objects.Deposit">
+    <void property="info">
+     <string>zxcvert</string>
+    </void>
+    <void property="insertRate">
+     <double>22.0</double>
+    </void>
+    <void property="minSum">
+     <int>300</int>
+    </void>
+    <void property="name">
+     <string>zxcvwertg</string>
+    </void>
+    <void property="time">
+     <int>3</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="sample.Objects.Deposit">
+    <void property="info">
+     <string>xcvrty</string>
+    </void>
+    <void property="insertRate">
+     <double>22.0</double>
+    </void>
+    <void property="minSum">
+     <int>300</int>
+    </void>
+    <void property="name">
+     <string>mjmj</string>
+    </void>
+    <void property="time">
+     <int>4</int>
     </void>
    </object>
   </void>

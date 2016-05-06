@@ -27,11 +27,21 @@ public class DeleteDialogController {
     private Button buttonClose;
 
     private static Deposit deposit;
+    private static int indexDeposit;
 
     public void setDeposit(Deposit deposit){
         this.deposit=deposit;
 
     }
+
+    public  int getIndexDeposit() {
+        return indexDeposit;
+    }
+
+    public void setIndexDeposit(int indexDeposit) {
+        this.indexDeposit = indexDeposit;
+    }
+
     public Deposit getDeposit(){
         return  deposit;
     }
@@ -78,6 +88,8 @@ public class DeleteDialogController {
         for(Deposit dep:allDeposits){
             if(areaInfo.getText().contains(dep.getName())){
                 setDeposit(dep);
+                setIndexDeposit(allDeposits.indexOf(dep));
+
                 break;
             }
         }

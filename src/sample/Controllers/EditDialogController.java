@@ -46,6 +46,15 @@ public class EditDialogController {
     private ComboBox selectDeposit;
     private static Deposit deposit=null;
     private static int indexDeposit;
+    private static Deposit oldDeposit=null;
+
+    public Deposit getOldDeposit() {
+        return oldDeposit;
+    }
+
+    public void setOldDeposit(Deposit oldDeposit) {
+        this.oldDeposit = oldDeposit;
+    }
 
     public  void setIndexDeposit(int indexDeposit) {
         this.indexDeposit = indexDeposit;
@@ -58,7 +67,7 @@ public class EditDialogController {
         return  deposit;
     }
 
-    public  int getIndexDeposit() {
+    public static int getIndexDeposit() {
         return indexDeposit;
     }
 
@@ -134,6 +143,7 @@ public class EditDialogController {
         for(Deposit deposit:allDeposits){
             if(selectDeposit.getValue().equals(deposit.getName())){
                 setIndexDeposit(allDeposits.indexOf(deposit));
+                setOldDeposit(deposit);
             }
         }
     }

@@ -11,5 +11,6 @@
     <orderEntry type="library" name="jsoup-1.8.3" level="project" />
     <orderEntry type="library" name="controlsfx-8.20.9" level="project" />
     <orderEntry type="library" name="openjfx-dialogs-1.0.3" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1" level="project" />
   </component>
 </module>

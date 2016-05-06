@@ -12,18 +12,28 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
+import sample.Calculations.ClcConvert;
 import sample.Calculations.ClcDeposit;
+import sample.Database.DataBase;
 import sample.Database.Deserialization;
 import sample.Database.Serialisation;
 import sample.Interfaces.Impl.CollectionDeposits;
 import sample.Objects.Deposit;
+import sample.Objects.Money;
 import sample.Objects.Payroll;
+import sample.Parsers.ParserMoney;
 import sample.Utils.DialogManager;
 import sample.Validation.ImplValidation;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainController {
@@ -56,6 +66,8 @@ public class MainController {
     private MenuItem buttonDelete;
     @FXML
     private TextArea areaRezult;
+    @FXML
+    private Button buttonConvert;
 
     private Parent root;
     private AddDialogController addDialogController;
@@ -65,6 +77,11 @@ public class MainController {
     private Stage deleteDialogStage;
     private Stage editDialogStage;
     private Stage mainStage;
+    private Payroll payroll;
+    private ArrayList<Money> allObjects;
+    private Double[] convertSum;
+    private Connection connection;
+
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
@@ -73,7 +90,13 @@ public class MainController {
     @FXML
     private void initialize() {
         collectionDepositsImpl=new CollectionDeposits();
-        collectionDepositsImpl.setListDeposits(Deserialization.readBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml"));
+        //collectionDepositsImpl.setListDeposits(Deserialization.readBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml"));
+        try {
+            connection = DataBase.getDBConnection();
+            collectionDepositsImpl.setListDeposits(DataBase.getInfo(connection));
+        }catch(SQLException e) {
+            System.out.println("Ошибка соединения!");
+        }
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         fieldDate.setText(df.format(new Date()));
         areaInfo.setWrapText(true);
@@ -160,7 +183,12 @@ public class MainController {
 
                 if(addDialogController.getDeposit()!=null) {
                     collectionDepositsImpl.add(addDialogController.getDeposit());
-                    Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
+                   // Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
+                   try {
+                       DataBase.addInfo(connection, addDialogController.getDeposit());
+                   }catch (SQLException e){
+                       e.fillInStackTrace();
+                   }
                     privateControls();
                 }
                 break;
@@ -169,7 +197,15 @@ public class MainController {
                 showDialogEdit();
                 if(editDialogController.getDeposit()!=null) {
                     collectionDepositsImpl.edit(editDialogController.getIndexDeposit(), editDialogController.getDeposit());
-                    Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
+                   // Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
+                   // System.out.println(editDialogController.getDeposit());
+                    try {
+                        DataBase.updateInfo(connection, editDialogController.getDeposit(),editDialogController.getOldDeposit());
+                       // System.out.println(editDialogController.getDeposit());
+                    }catch (SQLException e){
+                        e.fillInStackTrace();
+                    }
+
                     privateControls();
                 }
                 break;
@@ -177,7 +213,13 @@ public class MainController {
                 deleteDialogController=new DeleteDialogController();
                 showDialogDelete();
                 collectionDepositsImpl.delete(deleteDialogController.getDeposit());
-                Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
+               // Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
+
+                try {
+                    DataBase.deleteInfo(connection,deleteDialogController.getDeposit());
+                }catch (SQLException e){
+                    e.fillInStackTrace();
+                }
                 privateControls();
                 break;
         }
@@ -240,10 +282,10 @@ public class MainController {
             DialogManager.showErrorDialog("Ошибка","Сумма вклада должна быть числом!");
         }
         else if(Integer.parseInt(fieldSum.getText())<deposit.getMinSum()){
-            System.out.println(deposit.getMinSum());
+            DialogManager.showInfoDialog("Информация","Минимальная сумма вклада: "+deposit.getMinSum());
         }
         else {
-            Payroll payroll = ClcDeposit.calculateDeposit(Double.parseDouble(fieldSum.getText()), Integer.parseInt(fieldTime.getText()), Double.parseDouble(fieldPercent.getText()));
+            payroll = ClcDeposit.calculateDeposit(Double.parseDouble(fieldSum.getText()), Integer.parseInt(fieldTime.getText()), Double.parseDouble(fieldPercent.getText()));
             String s = " ";
             s = "Вклад: " + selectDeposit.getValue() + "\r\n" +
                     "Сумма вклада: " + fieldSum.getText() + "\r\n" +
@@ -254,7 +296,22 @@ public class MainController {
         }
     }
 
-    public void startServer(ActionEvent actionEvent) {
-
+    public void actionConvert(ActionEvent actionEvent) {
+        try {
+            Document doc = Jsoup.connect("http://www.nbrb.by/statistics/rates/ratesdaily.asp").get();
+            allObjects = ParserMoney.parseHTML(doc);
+        } catch (IOException e) {
+            System.out.println("Ошибка соединения!");
+            return;
+        }finally {
+            System.out.println("Соединение с сервером установлено!");
+        }
+       // ClcConvert.convertPayroll(allObjects,payroll.getSumTotal());
+        convertSum=ClcConvert.convertPayroll(allObjects,payroll.getSumTotal());
+String s=null;
+        for(int i=0;i<allObjects.size();i++){
+            s+=allObjects.get(i).getCode()+" "+convertSum[i]+"\r\n";
+        }
+        areaRezult.setText(s);
     }
 }

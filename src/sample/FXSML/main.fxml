@@ -32,7 +32,7 @@
     </MenuBar>
       <Pane>
          <children>
-            <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="669.0" vgap="5.0">
+            <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="456.0" prefWidth="669.0" vgap="5.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="239.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="10.0" prefWidth="425.0" />
@@ -88,6 +88,11 @@
                   <ComboBox fx:id="selectDeposit" onAction="#showElements" prefHeight="25.0" prefWidth="321.0" promptText="Выберите вклад" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Button fx:id="buttonRezult" mnemonicParsing="false" onAction="#actionCalculate" prefHeight="34.0" prefWidth="105.0" text="Рассчитать" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <BorderPane prefHeight="200.0" prefWidth="200.0" />
+                  <Button fx:id="buttonConvert" mnemonicParsing="false" onAction="#actionConvert" prefHeight="34.0" prefWidth="105.0" text="Перевод" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <GridPane.margin>
+                        <Insets left="250.0" />
+                     </GridPane.margin>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="400.0" />
@@ -95,6 +100,6 @@
             </GridPane>
          </children>
       </Pane>
-      <TextArea fx:id="areaRezult" editable="false" prefHeight="168.0" prefWidth="669.0" />
+      <TextArea fx:id="areaRezult" editable="false" prefHeight="197.0" prefWidth="669.0" />
   </children>
 </VBox>

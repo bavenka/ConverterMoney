@@ -56,7 +56,7 @@ public class ImplValidation {
             @Override
             public void handle(KeyEvent event) {
 
-                if (!event.getCharacter().matches("\\d|")) {
+                if (!event.getCharacter().matches("\\d|\b")) {
                     DialogManager.showErrorDialog("Ошибка","Поле предусмотрено только для ввода цифр!");
                     event.consume();
                 }
