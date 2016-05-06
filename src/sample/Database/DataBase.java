@@ -56,7 +56,7 @@ public class DataBase {
 
     }
     public static ObservableList<Deposit> getInfo(Connection connection)throws SQLException{
-        ArrayList<Deposit> deposits=new ArrayList<>();
+        ArrayList<Deposit> deposits=new ArrayList();
         String info="SELECT name,time, insertRate, info, minSum FROM database.deposits";
         preparedStatement=connection.prepareStatement(info);
         ResultSet rs=preparedStatement.executeQuery();
