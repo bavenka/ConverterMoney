@@ -34,7 +34,9 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MainController {
     public static CollectionDeposits collectionDepositsImpl;
@@ -81,6 +83,7 @@ public class MainController {
     private ArrayList<Money> allObjects;
     private Double[] convertSum;
     private Connection connection;
+    Calendar calendar;
 
 
     public void setMainStage(Stage mainStage) {
@@ -97,8 +100,9 @@ public class MainController {
         }catch(SQLException e) {
             System.out.println("Ошибка соединения!");
         }
-        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-        fieldDate.setText(df.format(new Date()));
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        calendar = Calendar.getInstance();
+        fieldDate.setText(df.format(calendar.getTime()));
         areaInfo.setWrapText(true);
         fillComboBox(collectionDepositsImpl.getListDeposits());
         collectionDepositsImpl.getListDeposits().addListener(new ListChangeListener<Deposit>() {
@@ -289,7 +293,7 @@ public class MainController {
             DialogManager.showInfoDialog("Информация","Минимальная сумма вклада: "+deposit.getMinSum());
         }
         else {
-            payroll = ClcDeposit.calculateDeposit(Double.parseDouble(fieldSum.getText()), Integer.parseInt(fieldTime.getText()), Double.parseDouble(fieldPercent.getText()));
+            payroll = ClcDeposit.calculateDeposit(Double.parseDouble(fieldSum.getText()), Integer.parseInt(fieldTime.getText()), Double.parseDouble(fieldPercent.getText()),calendar);
             String s = " ";
             s = "Вклад: " + selectDeposit.getValue() + "\r\n" +
                     "Сумма вклада: " + fieldSum.getText() + "\r\n" +
