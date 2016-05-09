@@ -26,7 +26,7 @@ public class ImplValidation {
 
         textField.focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
-                if (!textField.getText().matches("[ a-zA-Z()1-9]+")) {
+                if (!textField.getText().matches("[ \\-а-яА-Я()1-9]+")) {
                   //  DialogManager.showErrorDialog("Ошибка","Значение названия содержит недопустимые символы!");
                     textField.setText("");
                 }

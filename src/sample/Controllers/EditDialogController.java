@@ -149,7 +149,7 @@ public class EditDialogController {
     }
     private boolean checkNameObject(ObservableList<Deposit>deposits){
         for(int i=0;i<deposits.size();i++){
-            if(deposits.get(i).equals(indexDeposit)){
+            if(deposits.get(i)==deposits.get(indexDeposit)){
                 continue;
             }
             else if (deposits.get(i).getName().equals(deposit.getName()))

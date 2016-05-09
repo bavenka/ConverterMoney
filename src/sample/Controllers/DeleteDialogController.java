@@ -26,7 +26,7 @@ public class DeleteDialogController {
     @FXML
     private Button buttonClose;
 
-    private static Deposit deposit;
+    private static Deposit deposit=null;
     private static int indexDeposit;
 
     public void setDeposit(Deposit deposit){

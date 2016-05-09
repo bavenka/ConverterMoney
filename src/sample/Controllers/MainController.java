@@ -212,15 +212,19 @@ public class MainController {
             case "buttonDelete":
                 deleteDialogController=new DeleteDialogController();
                 showDialogDelete();
-                collectionDepositsImpl.delete(deleteDialogController.getDeposit());
-               // Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
+                if(deleteDialogController.getDeposit()!=null) {
 
-                try {
-                    DataBase.deleteInfo(connection,deleteDialogController.getDeposit());
-                }catch (SQLException e){
-                    e.fillInStackTrace();
+
+                    collectionDepositsImpl.delete(deleteDialogController.getDeposit());
+                    // Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
+
+                    try {
+                        DataBase.deleteInfo(connection, deleteDialogController.getDeposit());
+                    } catch (SQLException e) {
+                        e.fillInStackTrace();
+                    }
+                    privateControls();
                 }
-                privateControls();
                 break;
         }
     }
