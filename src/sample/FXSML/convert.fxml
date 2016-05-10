@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.ConvertDialogController">
+   <children>
+      <ComboBox fx:id="selectInputCode" layoutX="106.0" layoutY="116.0" onAction="#actionSelectCode" prefHeight="41.0" prefWidth="111.0" />
+      <TextField fx:id="inputSum" layoutX="226.0" layoutY="116.0" prefHeight="41.0" prefWidth="245.0" />
+      <ComboBox fx:id="selectOutputCode" layoutX="106.0" layoutY="188.0" prefHeight="41.0" prefWidth="111.0" />
+      <TextField fx:id="outputSum" editable="false" layoutX="226.0" layoutY="188.0" prefHeight="41.0" prefWidth="245.0" />
+      <Button fx:id="buttonConvert" layoutX="226.0" layoutY="264.0" mnemonicParsing="false" onAction="#actionConvert" prefHeight="32.0" prefWidth="84.0" text="Перевод" />
+      <Button fx:id="buttonClose" layoutX="349.0" layoutY="264.0" mnemonicParsing="false" onAction="#actionClose" prefHeight="32.0" prefWidth="84.0" text="Отмена" />
+   </children>
+</Pane>

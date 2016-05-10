@@ -13,9 +13,7 @@ public class ClcDeposit {
         Payroll payroll=new Payroll();
         capitalization=new int[time];
         double firstSum=sum;
-        //int currentMonth=0;
         for(int i=0;i<time;i++){
-
             Double value=firstSum+(firstSum*percent*calendar.getActualMaximum(Calendar.DAY_OF_MONTH))/(366*100);
             capitalization[i]=value.intValue();
             firstSum =capitalization[i];

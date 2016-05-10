@@ -22,6 +22,7 @@ public class ParserMoney {
             cell.setCourse(Integer.parseInt(values.get(2).text().replaceAll(" ","").substring(0,values.get(2).text().length()-4)));
             allObjects.add(cell);
         }
+
         return allObjects;
     }
 }

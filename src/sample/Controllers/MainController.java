@@ -3,23 +3,18 @@ package sample.Controllers;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.parser.Parser;
 import sample.Calculations.ClcConvert;
 import sample.Calculations.ClcDeposit;
 import sample.Database.DataBase;
-import sample.Database.Deserialization;
-import sample.Database.Serialisation;
 import sample.Interfaces.Impl.CollectionDeposits;
 import sample.Objects.Deposit;
 import sample.Objects.Money;
@@ -31,12 +26,9 @@ import sample.Validation.ImplValidation;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class MainController {
     public static CollectionDeposits collectionDepositsImpl;
@@ -68,16 +60,16 @@ public class MainController {
     private MenuItem buttonDelete;
     @FXML
     private TextArea areaRezult;
-    @FXML
-    private Button buttonConvert;
 
     private Parent root;
     private AddDialogController addDialogController;
     private  DeleteDialogController deleteDialogController;
     private EditDialogController editDialogController;
+    private ConvertDialogController convertDialogController;
     private Stage addDialogStage;
     private Stage deleteDialogStage;
     private Stage editDialogStage;
+    private Stage convertDialogStage;
     private Stage mainStage;
     private Payroll payroll;
     private ArrayList<Money> allObjects;
@@ -230,6 +222,10 @@ public class MainController {
                     privateControls();
                 }
                 break;
+            case "buttonConvert":
+                convertDialogController=new ConvertDialogController();
+                showDialogConvert();
+                break;
         }
     }
 
@@ -255,6 +251,19 @@ public class MainController {
             addDialogStage.initModality(Modality.APPLICATION_MODAL);
             addDialogStage.initOwner(mainStage);
             addDialogStage.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Файл не наден!");
+        }
+    }
+    private void showDialogConvert() {
+        try {
+            convertDialogStage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("../FXSML/convert.fxml"));
+            convertDialogStage.setScene(new Scene(root));
+            convertDialogStage.setTitle("Добавление вклада");
+            convertDialogStage.initModality(Modality.APPLICATION_MODAL);
+            convertDialogStage.initOwner(mainStage);
+            convertDialogStage.showAndWait();
         } catch (IOException e) {
             System.out.println("Файл не наден!");
         }
@@ -304,22 +313,14 @@ public class MainController {
         }
     }
 
-    public void actionConvert(ActionEvent actionEvent) {
-        try {
-            Document doc = Jsoup.connect("http://www.nbrb.by/statistics/rates/ratesdaily.asp").get();
-            allObjects = ParserMoney.parseHTML(doc);
-        } catch (IOException e) {
-            System.out.println("Ошибка соединения!");
-            return;
-        }finally {
-            System.out.println("Соединение с сервером установлено!");
-        }
-       // ClcConvert.convertPayroll(allObjects,payroll.getSumTotal());
-        convertSum=ClcConvert.convertPayroll(allObjects,payroll.getSumTotal());
-String s=null;
-        for(int i=0;i<allObjects.size();i++){
-            s+=allObjects.get(i).getCode()+" "+convertSum[i]+"\r\n";
-        }
-        areaRezult.setText(s);
-    }
+//    public void actionConvert(ActionEvent actionEvent) {
+//
+//        // ClcConvert.convertPayroll(allObjects,payroll.getSumTotal());
+//        convertSum=ClcConvert.convertPayroll(allObjects,payroll.getSumTotal());
+//        String s=null;
+//        for(int i=0;i<allObjects.size();i++){
+//            s+=allObjects.get(i).getCode()+" "+convertSum[i]+"\r\n";
+//        }
+//        areaRezult.setText(s);
+//    }
 }
