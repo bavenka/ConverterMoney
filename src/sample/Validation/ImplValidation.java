@@ -10,24 +10,20 @@ import sample.Utils.DialogManager;
  * Created by Павел on 01.05.2016.
  */
 public class ImplValidation {
-
     public static void validPercent(TextField textField){
-
         textField.focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (!textField.getText().matches("[1-9]{1,2}\\.[0-9]")) {
-                   // DialogManager.showErrorDialog("Ошибка","Значение процентной ставки должно быть вещественным!");
                     textField.setText("");
                 }
             }
         });
     }
-    public static void validName(TextField textField){
 
+    public static void validName(TextField textField){
         textField.focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (!textField.getText().matches("[ \\-а-яА-Я()1-9]+")) {
-                  //  DialogManager.showErrorDialog("Ошибка","Значение названия содержит недопустимые символы!");
                     textField.setText("");
                 }
             }
@@ -72,7 +68,6 @@ public class ImplValidation {
         textField.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-
                 if (!event.getCharacter().matches("\\d|\b")) {
                     DialogManager.showErrorDialog("Ошибка","Поле предусмотрено только для ввода цифр!");
                     event.consume();

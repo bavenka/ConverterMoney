@@ -7,12 +7,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import sample.Calculations.ClcConvert;
 import sample.Objects.Money;
 import sample.Parsers.ParserMoney;
+import sample.Utils.DialogManager;
+import sample.Validation.ImplValidation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,15 +41,20 @@ public class ConvertDialogController {
         } catch (IOException e) {
             System.out.println("Ошибка соединения!");
             return;
-        }finally {
-            System.out.println("Соединение с сервером установлено!");
         }
+        ImplValidation.validSum(inputSum);
         fillComboBoxInputCodes(allMoney);
         fillComboBoxOutputCodes(allMoney);
     }
+
     public void actionConvert(ActionEvent actionEvent) {
-        Double digit=ClcConvert.convertSum(selectInputCode.getValue().toString(),selectOutputCode.getValue().toString(),Integer.parseInt(inputSum.getText()),allMoney);
-        outputSum.setText(String.format("#0.000",digit.toString()));
+        if(inputSum.getText().length()!=0 && selectInputCode.getValue()!=selectInputCode.getItems().get(0)
+                && selectOutputCode.getValue()!=selectOutputCode.getItems().get(0) && selectInputCode.getValue()!=null
+                && selectOutputCode.getValue()!=null ) {
+            Double digit = ClcConvert.convertSum(selectInputCode.getValue().toString(), selectOutputCode.getValue().toString(), Integer.parseInt(inputSum.getText()), allMoney);
+            outputSum.setText(String.format(digit.toString()));
+        }
+        else DialogManager.showErrorDialog("Ошибка","Поля не могут быть пустыми");
     }
 
     private void checkSelectCode(){

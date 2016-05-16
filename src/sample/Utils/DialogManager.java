@@ -13,6 +13,7 @@ public class DialogManager {
         alert.setHeaderText("");
         alert.showAndWait();
     }
+
     public static void showErrorDialog(String title,String text){
         Alert alert=new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

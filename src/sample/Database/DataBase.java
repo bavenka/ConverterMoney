@@ -1,10 +1,8 @@
 package sample.Database;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import sample.Interfaces.Deposits;
+
 import sample.Objects.Deposit;
 
 import java.sql.*;
@@ -33,7 +31,7 @@ public class DataBase {
             System.out.println("Драйвер не найден!");
         }
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "root");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?autoReconnect=true&useSSL=false", "root", "root");
             return connection;
         } catch (SQLException e) {
             System.out.println("Соединение с БД не установлено!");
@@ -42,19 +40,16 @@ public class DataBase {
     }
 
     public static void addInfo(Connection connection, Deposit deposit) throws SQLException {
-       // ArrayList<Deposit> deposits=new ArrayList<>(allDeposits);
         String info="insert into database.deposits(name,time, insertRate ,info,minSum) values(?,?,?,?,?);";
         preparedStatement=connection.prepareStatement(info);
-        //for(Deposit deposit:deposits){
             preparedStatement.setString(1,deposit.getName());
             preparedStatement.setInt(2,deposit.getTime());
             preparedStatement.setDouble(3,deposit.getInsertRate());
             preparedStatement.setString(4,deposit.getInfo());
             preparedStatement.setInt(5,deposit.getMinSum());
             preparedStatement.executeUpdate();
-       // }
-
     }
+
     public static ObservableList<Deposit> getInfo(Connection connection)throws SQLException{
         ArrayList<Deposit> deposits=new ArrayList();
         String info="SELECT name,time, insertRate, info, minSum FROM database.deposits";

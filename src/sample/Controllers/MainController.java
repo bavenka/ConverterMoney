@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jsoup.Jsoup;
@@ -85,7 +87,6 @@ public class MainController {
     @FXML
     private void initialize() {
         collectionDepositsImpl=new CollectionDeposits();
-        //collectionDepositsImpl.setListDeposits(Deserialization.readBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml"));
         try {
             connection = DataBase.getDBConnection();
             collectionDepositsImpl.setListDeposits(DataBase.getInfo(connection));
@@ -179,7 +180,6 @@ public class MainController {
 
                 if(addDialogController.getDeposit()!=null) {
                     collectionDepositsImpl.add(addDialogController.getDeposit());
-                   // Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
                    try {
                        DataBase.addInfo(connection, addDialogController.getDeposit());
                    }catch (SQLException e){
@@ -193,11 +193,8 @@ public class MainController {
                 showDialogEdit();
                 if(editDialogController.getDeposit()!=null) {
                     collectionDepositsImpl.edit(editDialogController.getIndexDeposit(), editDialogController.getDeposit());
-                   // Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml", collectionDepositsImpl.getListDeposits());
-                   // System.out.println(editDialogController.getDeposit());
                     try {
                         DataBase.updateInfo(connection, editDialogController.getDeposit(),editDialogController.getOldDeposit());
-                       // System.out.println(editDialogController.getDeposit());
                     }catch (SQLException e){
                         e.fillInStackTrace();
                     }
@@ -209,11 +206,7 @@ public class MainController {
                 deleteDialogController=new DeleteDialogController();
                 showDialogDelete();
                 if(deleteDialogController.getDeposit()!=null) {
-
-
                     collectionDepositsImpl.delete(deleteDialogController.getDeposit());
-                    // Serialisation.writeBD("C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\Database\\bd.xml",collectionDepositsImpl.getListDeposits());
-
                     try {
                         DataBase.deleteInfo(connection, deleteDialogController.getDeposit());
                     } catch (SQLException e) {
@@ -260,12 +253,13 @@ public class MainController {
             convertDialogStage = new Stage();
             root = FXMLLoader.load(getClass().getResource("../FXSML/convert.fxml"));
             convertDialogStage.setScene(new Scene(root));
-            convertDialogStage.setTitle("Добавление вклада");
+            convertDialogStage.setTitle("Конвертер валют");
+            convertDialogStage.getIcons().add(new Image("file:C:\\Users\\Павел\\IdeaProjects\\kurs\\src\\sample\\resources\\convert.png"));
             convertDialogStage.initModality(Modality.APPLICATION_MODAL);
             convertDialogStage.initOwner(mainStage);
             convertDialogStage.showAndWait();
         } catch (IOException e) {
-            System.out.println("Файл не наден!");
+            DialogManager.showInfoDialog("Информация","Не удаётся соединиться с сервером!");
         }
     }
 
@@ -312,15 +306,4 @@ public class MainController {
             areaRezult.setVisible(true);
         }
     }
-
-//    public void actionConvert(ActionEvent actionEvent) {
-//
-//        // ClcConvert.convertPayroll(allObjects,payroll.getSumTotal());
-//        convertSum=ClcConvert.convertPayroll(allObjects,payroll.getSumTotal());
-//        String s=null;
-//        for(int i=0;i<allObjects.size();i++){
-//            s+=allObjects.get(i).getCode()+" "+convertSum[i]+"\r\n";
-//        }
-//        areaRezult.setText(s);
-//    }
 }
