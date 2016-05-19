@@ -9,19 +9,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import sample.Calculations.ClcConvert;
 import sample.Calculations.ClcDeposit;
-import sample.Database.DataBase;
+import sample.Database.Connect;
+import sample.Database.Operations;
 import sample.Interfaces.Impl.CollectionDeposits;
 import sample.Objects.Deposit;
 import sample.Objects.Money;
 import sample.Objects.Payroll;
-import sample.Parsers.ParserMoney;
 import sample.Utils.DialogManager;
 import sample.Validation.ImplValidation;
 
@@ -68,16 +64,18 @@ public class MainController {
     private  DeleteDialogController deleteDialogController;
     private EditDialogController editDialogController;
     private ConvertDialogController convertDialogController;
+    private SearchDialogController searchDialogController;
     private Stage addDialogStage;
     private Stage deleteDialogStage;
     private Stage editDialogStage;
     private Stage convertDialogStage;
+    private Stage searchDialogStage;
     private Stage mainStage;
     private Payroll payroll;
     private ArrayList<Money> allObjects;
     private Double[] convertSum;
-    private Connection connection;
-    Calendar calendar;
+    private static Connection connection;
+    private Calendar calendar;
 
 
     public void setMainStage(Stage mainStage) {
@@ -88,8 +86,8 @@ public class MainController {
     private void initialize() {
         collectionDepositsImpl=new CollectionDeposits();
         try {
-            connection = DataBase.getDBConnection();
-            collectionDepositsImpl.setListDeposits(DataBase.getInfo(connection));
+            connection = Connect.getDBConnection();
+            collectionDepositsImpl.setListDeposits(Operations.getInfo(connection));
         }catch(SQLException e) {
             System.out.println("Ошибка соединения!");
         }
@@ -181,7 +179,7 @@ public class MainController {
                 if(addDialogController.getDeposit()!=null) {
                     collectionDepositsImpl.add(addDialogController.getDeposit());
                    try {
-                       DataBase.addInfo(connection, addDialogController.getDeposit());
+                       Operations.addInfo(connection, addDialogController.getDeposit());
                    }catch (SQLException e){
                        e.fillInStackTrace();
                    }
@@ -194,7 +192,7 @@ public class MainController {
                 if(editDialogController.getDeposit()!=null) {
                     collectionDepositsImpl.edit(editDialogController.getIndexDeposit(), editDialogController.getDeposit());
                     try {
-                        DataBase.updateInfo(connection, editDialogController.getDeposit(),editDialogController.getOldDeposit());
+                        Operations.updateInfo(connection, editDialogController.getDeposit(),editDialogController.getOldDeposit());
                     }catch (SQLException e){
                         e.fillInStackTrace();
                     }
@@ -208,7 +206,7 @@ public class MainController {
                 if(deleteDialogController.getDeposit()!=null) {
                     collectionDepositsImpl.delete(deleteDialogController.getDeposit());
                     try {
-                        DataBase.deleteInfo(connection, deleteDialogController.getDeposit());
+                        Operations.deleteInfo(connection, deleteDialogController.getDeposit());
                     } catch (SQLException e) {
                         e.fillInStackTrace();
                     }
@@ -218,6 +216,10 @@ public class MainController {
             case "buttonConvert":
                 convertDialogController=new ConvertDialogController();
                 showDialogConvert();
+                break;
+            case "buttonSearch":
+                searchDialogController=new SearchDialogController();
+                showDialogSearch();
                 break;
         }
     }
@@ -235,6 +237,7 @@ public class MainController {
             System.out.println("Файл не наден!");
         }
     }
+
     private void showDialogAdd() {
         try {
             addDialogStage = new Stage();
@@ -248,6 +251,7 @@ public class MainController {
             System.out.println("Файл не наден!");
         }
     }
+
     private void showDialogConvert() {
         try {
             convertDialogStage = new Stage();
@@ -277,6 +281,20 @@ public class MainController {
         }
     }
 
+    private void showDialogSearch() {
+        try {
+            searchDialogStage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("../FXSML/search.fxml"));
+            searchDialogStage.setScene(new Scene(root));
+            searchDialogStage.setTitle("Поиск депозита");
+            searchDialogStage.initModality(Modality.APPLICATION_MODAL);
+            searchDialogStage.initOwner(mainStage);
+            searchDialogStage.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Файл не наден!");
+        }
+
+    }
     private Deposit choiceDeposit(ObservableList<Deposit>deposits){
         Deposit deposit=new Deposit();
         for(Deposit dep:deposits){

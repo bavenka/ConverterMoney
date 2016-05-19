@@ -11,43 +11,18 @@ import java.util.ArrayList;
 /**
  * Created by Павел on 05.05.2016.
  */
-public class DataBase {
-    private static Connection connection;
+public class Operations {
     private static PreparedStatement preparedStatement;
-
-    public static Connection getConnection() {
-        return connection;
-    }
-
-    public static void setConnection(Connection connection) {
-        DataBase.connection = connection;
-    }
-
-    public static Connection getDBConnection() {
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Драйвер не найден!");
-        }
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql?autoReconnect=true&useSSL=false", "root", "root");
-            return connection;
-        } catch (SQLException e) {
-            System.out.println("Соединение с БД не установлено!");
-        }
-        return null;
-    }
 
     public static void addInfo(Connection connection, Deposit deposit) throws SQLException {
         String info="insert into database.deposits(name,time, insertRate ,info,minSum) values(?,?,?,?,?);";
         preparedStatement=connection.prepareStatement(info);
-            preparedStatement.setString(1,deposit.getName());
-            preparedStatement.setInt(2,deposit.getTime());
-            preparedStatement.setDouble(3,deposit.getInsertRate());
-            preparedStatement.setString(4,deposit.getInfo());
-            preparedStatement.setInt(5,deposit.getMinSum());
-            preparedStatement.executeUpdate();
+        preparedStatement.setString(1,deposit.getName());
+        preparedStatement.setInt(2,deposit.getTime());
+        preparedStatement.setDouble(3,deposit.getInsertRate());
+        preparedStatement.setString(4,deposit.getInfo());
+        preparedStatement.setInt(5,deposit.getMinSum());
+        preparedStatement.executeUpdate();
     }
 
     public static ObservableList<Deposit> getInfo(Connection connection)throws SQLException{

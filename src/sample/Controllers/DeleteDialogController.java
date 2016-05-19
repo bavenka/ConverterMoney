@@ -1,6 +1,5 @@
 package sample.Controllers;
 
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,8 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import sample.Database.Deserialization;
-import sample.Interfaces.Impl.CollectionDeposits;
 import sample.Objects.Deposit;
 
 /**
@@ -49,6 +46,7 @@ public class DeleteDialogController {
     private void initialize(){
         fillComboBoxDelete(MainController.collectionDepositsImpl.getListDeposits());
         areaInfo.setVisible(false);
+        areaInfo.setWrapText(true);
         buttonDelete.setVisible(false);
     }
     private void fillComboBoxDelete(ObservableList<Deposit> listDeposits){

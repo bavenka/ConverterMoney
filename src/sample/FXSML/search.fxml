@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="767.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.SearchDialogController">
+   <children>
+      <Label alignment="CENTER" layoutX="55.0" layoutY="39.0" prefHeight="41.0" prefWidth="172.0" text="Название  вклада:" />
+      <TextField fx:id="fieldName" layoutX="305.0" layoutY="35.0" prefHeight="41.0" prefWidth="205.0" />
+      <Label alignment="CENTER" layoutX="55.0" layoutY="96.0" prefHeight="41.0" prefWidth="172.0" text="Срок  вклада:" />
+      <TextField fx:id="fieldTime" layoutX="305.0" layoutY="96.0" prefHeight="41.0" prefWidth="205.0" />
+      <Label alignment="CENTER" layoutX="55.0" layoutY="157.0" prefHeight="41.0" prefWidth="172.0" text="Процентная ставка:" />
+      <TextField fx:id="fieldPercent" layoutX="305.0" layoutY="157.0" prefHeight="41.0" prefWidth="205.0" />
+      <TextArea fx:id="areaInfo" layoutX="308.0" layoutY="222.0" prefHeight="151.0" prefWidth="200.0" />
+      <Label alignment="CENTER" layoutX="62.0" layoutY="277.0" prefHeight="41.0" prefWidth="172.0" text="Информация о вкладе:" />
+      <TextField fx:id="fieldMinSum" layoutX="306.0" layoutY="396.0" prefHeight="41.0" prefWidth="205.0" />
+      <Label alignment="CENTER" layoutX="62.0" layoutY="396.0" prefHeight="41.0" prefWidth="172.0" text="Минимальная сумма вклада:" />
+      <Button fx:id="buttonSearch" layoutX="148.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionSearch" prefHeight="33.0" prefWidth="99.0" text="Поиск" />
+      <Button fx:id="buttonClose" layoutX="416.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionClose" prefHeight="33.0" prefWidth="99.0" text="Отмена" />
+      <ComboBox fx:id="selectDeposit" layoutX="183.0" layoutY="496.0" onAction="#actionSelectDeposit" prefHeight="25.0" prefWidth="282.0" />
+      <TextArea fx:id="areaMain" layoutX="84.0" layoutY="529.0" prefHeight="200.0" prefWidth="479.0" />
+   </children>
+</Pane>
