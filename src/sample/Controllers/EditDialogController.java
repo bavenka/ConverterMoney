@@ -78,7 +78,7 @@ public class EditDialogController {
         ImplValidation.validTime(fieldTime);
         ImplValidation.validPercent(fieldPercent);
         ImplValidation.validMinSum(fieldMinSum);
-        fillComboBoxEdit(MainController.collectionDepositsImpl.getListDeposits());
+        fillComboBoxEdit(UserDialogController.collectionDepositsImpl.getListDeposits());
         privateControls();
 
     }
@@ -134,7 +134,7 @@ public class EditDialogController {
         if (selectDeposit.getValue() == "Выберите вклад") {
             privateControls();
         } else {
-            fillControls(MainController.collectionDepositsImpl.getListDeposits());
+            fillControls(UserDialogController.collectionDepositsImpl.getListDeposits());
             publicControls();
         }
     }
@@ -164,13 +164,13 @@ public class EditDialogController {
         }
         else {
             deposit = new Deposit();
-            searchIndex(MainController.collectionDepositsImpl.getListDeposits());
+            searchIndex(UserDialogController.collectionDepositsImpl.getListDeposits());
             deposit.setName(fieldName.getText());
             deposit.setTime(Integer.parseInt(fieldTime.getText()));
             deposit.setInsertRate(Double.parseDouble(fieldPercent.getText()));
             deposit.setInfo(areaInfo.getText());
             deposit.setMinSum(Integer.parseInt(fieldMinSum.getText()));
-            if(checkNameObject(MainController.collectionDepositsImpl.getListDeposits()) == true){
+            if(checkNameObject(UserDialogController.collectionDepositsImpl.getListDeposits()) == true){
                 closeDialog(actionEvent);
             }
             else{

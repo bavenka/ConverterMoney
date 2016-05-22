@@ -4,9 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import sample.Controllers.MainController;
+import sample.Controllers.LoginDialogController;
 
 public class Main extends Application {
 
@@ -14,14 +13,20 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         setUserAgentStylesheet(STYLESHEET_MODENA);
         FXMLLoader fxmlLoader=new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("FXSML/main.fxml"));
+        //fxmlLoader.setLocation(getClass().getResource("FXSML/main.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("FXSML/login.fxml"));
         Parent fxmlMain=fxmlLoader.load();
-        MainController mainController=fxmlLoader.getController();
-        mainController.setMainStage(primaryStage);
-        primaryStage.setTitle("Калькулятор вкладов");
+        //UserDialogController mainController=fxmlLoader.getController();
+        //mainController.setMainStage(primaryStage);
+        LoginDialogController loginDialogController=fxmlLoader.getController();
+        loginDialogController.setMainStage(primaryStage);
+
+
+
+        primaryStage.setTitle("Authorization");
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("resources/money.png")));
-        primaryStage.setScene(new Scene(fxmlMain, 700, 800));
+       // primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("resources/money.png")));
+        primaryStage.setScene(new Scene(fxmlMain, 600, 400));
 
         primaryStage.show();
     }

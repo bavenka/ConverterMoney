@@ -48,7 +48,7 @@ public class SearchDialogController {
         searchedDeposits= new ArrayList<>();
         areaInfo.setWrapText(true);
         areaMain.setWrapText(true);
-        allDeposits=MainController.collectionDepositsImpl.getListDeposits();
+        allDeposits=UserDialogController.collectionDepositsImpl.getListDeposits();
     }
 
     public void actionClose(ActionEvent actionEvent) {
@@ -67,7 +67,6 @@ public class SearchDialogController {
                         && (fieldPercent.getText().length() == 0 || deposit.getInsertRate() == Double.parseDouble(fieldPercent.getText()))
                         && (areaInfo.getText().length() == 0 || deposit.getInfo().equals(areaInfo.getText()))
                         && (fieldMinSum.getText().length() == 0 || deposit.getMinSum() == Integer.parseInt(fieldMinSum.getText()))) {
-                    // searchedDeposits.add(deposit);
                     selectDeposit.getItems().add(deposit.getName());
                 }
             }

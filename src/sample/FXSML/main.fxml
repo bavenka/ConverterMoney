@@ -8,11 +8,11 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="685.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.MainController">
+<VBox prefHeight="685.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.UserDialogController">
   <children>
     <MenuBar prefHeight="25.0" prefWidth="689.0" VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu fx:id="file" mnemonicParsing="false" text="File">
           <items>
             <MenuItem fx:id="buttonAdd" mnemonicParsing="false" onAction="#actionMenuItemPressed" text="Add" />
                   <MenuItem fx:id="buttonDelete" mnemonicParsing="false" onAction="#actionMenuItemPressed" text="Delete" />

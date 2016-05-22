@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MainController {
+public class UserDialogController {
     public static CollectionDeposits collectionDepositsImpl;
     @FXML
     private ComboBox selectDeposit;
@@ -58,11 +58,18 @@ public class MainController {
     private MenuItem buttonDelete;
     @FXML
     private TextArea areaRezult;
+    @FXML
+    private Menu file;
+
+    public Menu getFile() {
+        return file;
+    }
 
     private Parent root;
     private AddDialogController addDialogController;
     private  DeleteDialogController deleteDialogController;
     private EditDialogController editDialogController;
+    private LoginDialogController loginDialogController;
     private ConvertDialogController convertDialogController;
     private SearchDialogController searchDialogController;
     private Stage addDialogStage;
@@ -76,11 +83,6 @@ public class MainController {
     private Double[] convertSum;
     private static Connection connection;
     private Calendar calendar;
-
-
-    public void setMainStage(Stage mainStage) {
-        this.mainStage = mainStage;
-    }
 
     @FXML
     private void initialize() {

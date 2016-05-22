@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import sample.Objects.Deposit;
+import sample.Objects.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,4 +62,39 @@ public class Operations {
         preparedStatement.setString(1,deposit.getName());
         preparedStatement.executeUpdate();
     }
+
+    public static String checkLogin(Connection connection, User user) throws SQLException{
+        String info = "SELECT login, password FROM database.users WHERE login=?";
+        String login=null;
+        preparedStatement=connection.prepareStatement(info);
+        preparedStatement.setString(1,user.getLogin());
+        ResultSet rs=preparedStatement.executeQuery();
+        while (rs.next()) {
+            login = rs.getString("login");
+        }
+        return login;
+    }
+
+    public static ArrayList<User> getUsers(Connection connection)throws SQLException{
+        ArrayList<User> users=new ArrayList();
+        String info="SELECT login, password FROM database.users";
+        preparedStatement=connection.prepareStatement(info);
+        ResultSet rs=preparedStatement.executeQuery();
+        while(rs.next()){
+            User user=new User();
+            user.setLogin(rs.getString(1));
+            user.setPassword(rs.getString(2));
+            users.add(user);
+        }
+        return users;
+    }
+
+    public static void addUser(Connection connection, User user) throws SQLException {
+        String info="insert into database.users(login,password) values(?,?);";
+        preparedStatement=connection.prepareStatement(info);
+        preparedStatement.setString(1,user.getLogin());
+        preparedStatement.setString(2,user.getPassword());
+        preparedStatement.executeUpdate();
+    }
+
 }

@@ -44,7 +44,7 @@ public class DeleteDialogController {
     }
     @FXML
     private void initialize(){
-        fillComboBoxDelete(MainController.collectionDepositsImpl.getListDeposits());
+        fillComboBoxDelete(UserDialogController.collectionDepositsImpl.getListDeposits());
         areaInfo.setVisible(false);
         areaInfo.setWrapText(true);
         buttonDelete.setVisible(false);
@@ -77,7 +77,7 @@ public class DeleteDialogController {
 
 
         } else {
-            fillAreaInfo(MainController.collectionDepositsImpl.getListDeposits());
+            fillAreaInfo(UserDialogController.collectionDepositsImpl.getListDeposits());
             areaInfo.setVisible(true);
             buttonDelete.setVisible(true);
         }
@@ -95,7 +95,7 @@ public class DeleteDialogController {
     }
 
     public void deleteDeposit(ActionEvent actionEvent) {
-       actionDelete(MainController.collectionDepositsImpl.getListDeposits());
+       actionDelete(UserDialogController.collectionDepositsImpl.getListDeposits());
         closeDialog(actionEvent);
     }
 

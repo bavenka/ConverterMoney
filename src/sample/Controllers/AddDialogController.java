@@ -3,15 +3,12 @@ package sample.Controllers;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import sample.Interfaces.Impl.CollectionDeposits;
 import sample.Objects.Deposit;
 import sample.Utils.DialogManager;
 import sample.Validation.ImplValidation;
@@ -74,7 +71,7 @@ public class AddDialogController {
             deposit.setInsertRate(Double.parseDouble(fieldCreatePercent.getText()));
             deposit.setInfo(areaCreateInfo.getText());
             deposit.setMinSum(Integer.parseInt(fieldCreateMinSum.getText()));
-            if(checkEqualsNameObject(MainController.collectionDepositsImpl.getListDeposits())==true){
+            if(checkEqualsNameObject(UserDialogController.collectionDepositsImpl.getListDeposits())==true){
                 closeDialog(actionEvent);
             }
             else{
