@@ -87,6 +87,7 @@ public class UserDialogController {
     @FXML
     private void initialize() {
 
+
         if(isVisible)
             file.setVisible(true);
         else file.setVisible(false);
