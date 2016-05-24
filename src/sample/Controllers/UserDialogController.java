@@ -83,9 +83,13 @@ public class UserDialogController {
     private Double[] convertSum;
     private static Connection connection;
     private Calendar calendar;
-
+    public static Boolean isVisible = false;
     @FXML
     private void initialize() {
+
+        if(isVisible)
+            file.setVisible(true);
+        else file.setVisible(false);
         collectionDepositsImpl=new CollectionDeposits();
         try {
             connection = Connect.getDBConnection();

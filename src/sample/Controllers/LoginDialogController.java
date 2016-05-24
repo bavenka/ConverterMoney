@@ -68,11 +68,13 @@ public class LoginDialogController {
             DialogManager.showErrorDialog("Ошибка", "Поля не могут быть пустыми!");
         }
         else if(checkUser()==true && newUser.getLogin().equals("pavel") && newUser.getPassword().equals("123")){
+       userDialogController.isVisible=true;
             actionClose();
             showDialogUser();
         }
         else if (checkUser() == true && newUser.getPassword().equals(inputPassword.getText())) {
             //userDialogController.getFile().setVisible(false);
+            userDialogController.isVisible=false;
             actionClose();
             showDialogUser();
         }
